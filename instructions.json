@@ -1,0 +1,177 @@
+[
+  {
+    "page": null,
+    "text": "the produced detections always match with the table cells\nin number and correspondence.",
+    "action": "highlight",
+    "comment": "Key: 关键设定：检测数与cell数天然一致，支撑后续“不用Hungarian匹配”的核心论证。",
+    "subject": "一对一对应"
+  },
+  {
+    "page": null,
+    "text": "The FFN consists\nof a Multi-Layer Perceptron (3 layers with ReLU activa-\ntion function)",
+    "action": "highlight",
+    "comment": "Parameter: bbox回归头的具体结构（3层ReLU MLP），是复现与理解容量/过拟合风险的关键参数。",
+    "subject": "BBox头结构"
+  },
+  {
+    "page": null,
+    "text": "predicts the normalized coordinates for\nthe bounding box of each table cell.",
+    "action": "highlight",
+    "comment": "Detail: 指出回归目标为“归一化坐标”，暗示坐标有尺度规范化处理并影响损失尺度。",
+    "subject": "回归目标"
+  },
+  {
+    "page": null,
+    "text": "classified based on whether they are\nempty or not using a linear layer.",
+    "action": "highlight",
+    "comment": "Parameter: 空/非空二分类头的实现（线性层），与前文标注binary class形成训练闭环。",
+    "subject": "空框分类"
+  },
+  {
+    "page": null,
+    "text": "We formulate a multi-task loss",
+    "action": "highlight",
+    "comment": "Key: 总体训练目标是多任务（结构token + bbox），决定损失权衡与训练稳定性。",
+    "subject": "多任务训练"
+  },
+  {
+    "page": null,
+    "text": "The Cross-Entropy loss (denoted as\nl_s) is used to train the Structure Decoder",
+    "action": "highlight",
+    "comment": "Parameter: 结构分支损失定义（交叉熵l_s），明确结构token的监督方式。",
+    "subject": "结构损失"
+  },
+  {
+    "page": null,
+    "text": "l_box consists\nof the generally used l_1 loss",
+    "action": "highlight",
+    "comment": "Parameter: bbox损失包含l1回归项，是检测分支的核心组成之一。",
+    "subject": "BBox损失"
+  },
+  {
+    "page": null,
+    "text": "and the\nIoU loss (l_iou) to be scale invariant",
+    "action": "highlight",
+    "comment": "Detail: 引入IoU损失用于尺度不变性，体现作者对不同尺寸表格/框的鲁棒性考虑。",
+    "subject": "BBox损失"
+  },
+  {
+    "page": null,
+    "text": "we do not use the Hungarian algo-\nrithm",
+    "action": "highlight",
+    "comment": "Key: 与DETR的关键差异点：省去Hungarian匹配，依赖于本文的一对一对齐设定与数据机制。",
+    "subject": "去匹配策略"
+  },
+  {
+    "page": null,
+    "text": "Our token input sequence\nis naturally ordered",
+    "action": "highlight",
+    "comment": "Detail: 省Hungarian理由(1)：token序列天然有序→hidden state有序，为bbox预测提供固定对应关系。",
+    "subject": "有序序列"
+  },
+  {
+    "page": null,
+    "text": "ensures a one-to-one\nmapping between the cell content and its bounding box",
+    "action": "highlight",
+    "comment": "Detail: 省Hungarian理由(2)：数据后处理bbox生成机制保证内容与bbox一一映射，是训练对齐的基础。",
+    "subject": "数据对齐"
+  },
+  {
+    "page": null,
+    "text": "l_box = λ_iou l_iou + λ_l1",
+    "action": "highlight",
+    "comment": "Parameter: bbox损失的加权组合形式，λ_iou与λ_l1控制IoU与l1的相对权重。",
+    "subject": "损失公式"
+  },
+  {
+    "page": null,
+    "text": "l = λ l_s + (1 − λ)l_box",
+    "action": "highlight",
+    "comment": "Parameter: 总损失权衡结构与bbox两任务；λ∈[0,1]决定训练侧重，是最关键超参数之一。",
+    "subject": "损失权衡"
+  },
+  {
+    "page": 6,
+    "text": "resized to 448*448 pixels",
+    "action": "highlight",
+    "comment": "Parameter: 输入分辨率设定（448×448）直接影响速度/显存与细粒度结构可分辨性。",
+    "subject": "实现参数"
+  },
+  {
+    "page": 6,
+    "text": "feature map has a dimension of 28*28.",
+    "action": "highlight",
+    "comment": "Parameter: 特征图尺寸（28×28）与backbone下采样/池化配置相关，决定bbox对齐的空间粒度。",
+    "subject": "实现参数"
+  },
+  {
+    "page": 6,
+    "text": "Structural tags length ≤ 512 tokens.",
+    "action": "highlight",
+    "comment": "Parameter: 结构序列长度上限（≤512）约束了解码复杂度与可处理表格结构的上限。",
+    "subject": "输入约束"
+  },
+  {
+    "page": 6,
+    "text": "input feature size of 512, feed\nforward network of 1024, and 4 attention heads.",
+    "action": "highlight",
+    "comment": "Parameter: Transformer Encoder的维度与头数（512/1024/4 heads）是模型容量与算力配置的核心细节。",
+    "subject": "Transformer配置"
+  },
+  {
+    "page": 6,
+    "text": "dropout layers are set to 0.5.",
+    "action": "highlight",
+    "comment": "Parameter: dropout=0.5 的正则强度较大，体现作者对过拟合风险的控制策略。",
+    "subject": "正则参数"
+  },
+  {
+    "page": 6,
+    "text": "trained with 3 Adam opti-\nmizers",
+    "action": "highlight",
+    "comment": "Parameter: 三个Adam分别对应CNN/结构解码/bbox解码，体现多模块独立优化的训练设计。",
+    "subject": "训练配置"
+  },
+  {
+    "page": 6,
+    "text": "initializing learn-\ning rate is 0.001 for 12 epochs with a batch size of 24",
+    "action": "highlight",
+    "comment": "Parameter: 第一阶段训练超参（lr=0.001, 12 epochs, bs=24）是复现实验的重要设置。",
+    "subject": "学习率计划"
+  },
+  {
+    "page": 6,
+    "text": "reduce the learning rate to\n0.0001, the batch size to 18",
+    "action": "highlight",
+    "comment": "Parameter: 第二阶段训练超参（lr降至1e-4, bs=18），体现分阶段收敛策略。",
+    "subject": "学习率计划"
+  },
+  {
+    "page": 6,
+    "text": "employ a ’caching’ technique to preform\nfaster autoregressive decoding.",
+    "action": "highlight",
+    "comment": "Detail: 推理加速关键点：缓存已解码token特征以复用，减少每步重复计算并提升自回归解码速度。",
+    "subject": "推理加速"
+  },
+  {
+    "page": 6,
+    "text": "evaluated on three major publicly avail-\nable datasets",
+    "action": "highlight",
+    "comment": "Detail: 泛化评估设定：跨多个公开数据集验证有效性，强调跨域适用性而非单一数据集拟合。",
+    "subject": "泛化评估"
+  },
+  {
+    "page": 6,
+    "text": "PubTabNet, FinTabNet and TableBank",
+    "action": "highlight",
+    "comment": "Parameter: 三大评测数据集名称明确，分别对应科学/金融/通用域，是跨域比较的基础口径。",
+    "subject": "评测数据"
+  },
+  {
+    "page": 6,
+    "text": "baseline results on the challenging\nSynthTabNet dataset.",
+    "action": "highlight",
+    "comment": "Detail: 同时报告SynthTabNet baseline，便于衡量在“更具挑战的合成分布”上的表现与可控泛化。",
+    "subject": "合成评测"
+  }
+]
